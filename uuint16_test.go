@@ -90,9 +90,9 @@ func TestDoubleReturn(t *testing.T) {
   val, err := Rent()
   if err != nil { t.Fail() }
   Return(val)
-  before := len(p.InUse)
+  before := len(p.Available)
   Return(val)
-  if before != len(p.InUse) {
+  if before != len(p.Available) {
     t.Logf("value was returned twice")
     t.Fail()
   }
