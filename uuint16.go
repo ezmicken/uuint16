@@ -49,8 +49,16 @@ func Return(val uint16) {
   p.Mtx.Lock()
   defer p.Mtx.Unlock()
 
+  // abort if already available.
+  for i := 0; i < len(p.Available); i++ {
+    if p.Available[i] == val {
+      return
+    }
+  }
+
   p.Available = append(p.Available, val)
 
+  // remove from InUse
   b := p.InUse[:0]
   for _, x := range p.InUse {
     if x != val {
